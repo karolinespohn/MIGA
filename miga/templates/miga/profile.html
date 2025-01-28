@@ -1,0 +1,57 @@
+{% extends 'miga/base.html' %}
+{% block title %}Profile - {{ user.username }}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-center">Profile Information</h2>
+            </div>
+            <div class="card-body">
+                <div class="row mb-4">
+                    <div class="col-md-4">
+                        <h5>Username</h5>
+                        <p>{{ user.username }}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h5>Email</h5>
+                        <p>{{ user.email }}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h5>Member Since</h5>
+                        <p>{{ user.joined_date|date:"F j, Y" }}</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h5 class="card-title">Total Score</h5>
+                                <p class="card-text h3">{{ user.total_score }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h5 class="card-title">Assignments Completed</h5>
+                                <p class="card-text h3">{{ user.assignments_completed }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h5 class="card-title">Avg. Submission Time</h5>
+                                <p class="card-text h3">{{ user.avg_submission_time|floatformat:1 }} hours</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
