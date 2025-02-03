@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 from django.contrib.auth import get_user_model
 from django.utils import timezone
-from miga.models import Project, Performance
+from miga.models import Assignment, Performance
 import random
 from datetime import timedelta
 
@@ -13,11 +13,11 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         # Create test projects
         projects = [
-            {'name': 'Basic Calculator', 'difficulty': 1, 'max_score': 100},
-            {'name': 'Todo App', 'difficulty': 1, 'max_score': 100},
-            {'name': 'Weather App', 'difficulty': 2, 'max_score': 200},
-            {'name': 'Blog Platform', 'difficulty': 2, 'max_score': 200},
-            {'name': 'E-commerce Site', 'difficulty': 3, 'max_score': 300},
+            {'name': 'Basic Calculator', 'difficulty': 1, 'max_score': 1},
+            {'name': 'Todo App', 'difficulty': 1, 'max_score': 12},
+            {'name': 'Weather App', 'difficulty': 2, 'max_score': 3},
+            {'name': 'Blog Platform', 'difficulty': 2, 'max_score': 4},
+            {'name': 'E-commerce Site', 'difficulty': 3, 'max_score': 5},
         ]
 
         for project_data in projects:

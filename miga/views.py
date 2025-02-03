@@ -51,7 +51,7 @@ def dashboard(request):
         'avg_submission_time': request.user.avg_submission_time,
         'assignments_completed': request.user.assignments_completed,
         'total_score': request.user.total_score,
-        'ranking_history': [85, 82, 88, 90, 87, 91, 89],  # Mock weekly rankings
+        'ranking_history': [1, 5, 10, 5, 4, 5],  # Mock weekly rankings
         'awards': [
             {'name': 'Early Bird', 'description': 'Push an assignment between  5:00 and 9:00'},
             {'name': 'Steady Sailor', 'description': 'Stay in the same place for 3 consecutive weeks'},
@@ -97,7 +97,7 @@ def scoreboard(request):
     current_user_rank = next((i + 1 for i, u in enumerate(users) if u == request.user), 0)
 
     return render(request, 'miga/scoreboard.html', {
-        'users': users[:50],
+        'users': users[:5],
         'current_period': period,
         'current_user_rank': current_user_rank,
     })

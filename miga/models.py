@@ -23,30 +23,23 @@ class User(AbstractUser):
     def __str__(self):
         return self.username
 
-class Project(models.Model):
+class Assignment(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField()
-    difficulty = models.IntegerField(choices=[
-        (1, 'Easy'),
-        (2, 'Medium'),
-        (3, 'Hard'),
-    ])
-    max_score = models.IntegerField()
-    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.name
 
 class Performance(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE)
     score = models.IntegerField()
     submission_time = models.DateTimeField(default=timezone.now)
     completion_time = models.FloatField(help_text="Time taken to complete in hours")
 
     class Meta:
         ordering = ['-submission_time']
-        unique_together = ['user', 'project']  # One submission per project per user
+        unique_together = ['user', 'assignment']  # One submission per assignment per user
 
     def save(self, *args, **kwargs):
         # Update user's statistics
@@ -68,4 +61,4 @@ class Performance(models.Model):
         user.save()
 
     def __str__(self):
-        return f"{self.user.username} - {self.project.name} ({self.score} points)"
+        return f"{self.user.username} - {self.assignment.name} ({self.score} points)"
