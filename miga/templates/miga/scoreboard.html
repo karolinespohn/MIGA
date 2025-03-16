@@ -7,16 +7,33 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h2 class="mb-0">Scoreboard</h2>
-                    <select class="form-select" style="width: auto"
-                            onchange="window.location.href='?period=' + this.value">
-                        {% for week in "123456"|make_list %}
-                            <option value="week{{ week }}"
-                                    {% if current_period == 'week'|add:week %}selected{% endif %}>
-                                Week {{ week }}
-                            </option>
-                        {% endfor %}
-                    </select>
+                    <div class="d-flex">
+                        <select class="form-select me-2" style="width: auto"
+                                id="language-select"
+                                onchange="updateScoreboard()">
+                            <option value="cpp" {% if current_language == 'cpp' %}selected{% endif %}>C++</option>
+                            <option value="rust" {% if current_language == 'rust' %}selected{% endif %}>Rust</option>
+                        </select>
+                        <select class="form-select" style="width: auto"
+                                id="period-select"
+                                onchange="updateScoreboard()">
+                            {% for week in "123456"|make_list %}
+                                <option value="week{{ week }}"
+                                        {% if current_period == 'week'|add:week %}selected{% endif %}>
+                                    Week {{ week }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
                 </div>
+
+                <script>
+                    function updateScoreboard() {
+                        const language = document.getElementById('language-select').value;
+                        const period = document.getElementById('period-select').value;
+                        window.location.href = `?period=${period}&language=${language}`;
+                    }
+                </script>
                 <div class="card-body">
                     {% if current_user_rank %}
                         <div class="alert alert-info">
@@ -25,24 +42,34 @@
                     {% endif %}
 
                     <div class="table-responsive">
-                        <table class="table table-hover">
+                        <!-- it would be nice to have a hover effect. this could be added by putting "table-hover" in class-->
+                        <!-- the problem right now is that it looks bad, because the badges have white background & it looks weird on hover-->
+                        <table class="table">
                             <thead>
                             <tr>
                                 <th>Rank</th>
                                 <th>User</th>
-                                <th>Time</th>
                             </tr>
                             </thead>
                             <tbody>
                             {% for user in users %}
-                                <tr {% if user == request.user %}class="table-primary"{% endif %}>
+                                 <tr {% if user == request.user %}style="color: blue;"{% endif %}>
                                     <td>#{{ forloop.counter }}</td>
-                                    <td>{{ user.username }}</td>
-                                    <td>{{ user.avg_submission_time|floatformat:1 }} hours</td>
+                                    <td>
+                                        {{ user.display_name }}
+                                        {% load static %}
+                                        {% for user_award in user.user_awards %}
+                                            <img src="{% static 'images/'|add:user_award.award.image_name|add:'.png' %}" 
+                                                 alt="{{ user_award.award.name }}" 
+                                                 title="{{ user_award.award.description }}"
+                                                 class="ms-1"
+                                                 style="height: 30px; width: auto; background-color: white; padding: 2px; border-radius: 2px;">
+                                        {% endfor %}
+                                    </td>
                                 </tr>
                             {% empty %}
                                 <tr>
-                                    <td colspan="3" class="text-center">No rankings available for this period.</td>
+                                    <td colspan="2" class="text-center">No rankings available for this period.</td>
                                 </tr>
                             {% endfor %}
                             </tbody>

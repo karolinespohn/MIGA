@@ -10,22 +10,41 @@
             </div>
             <div class="card-body">
                 <div class="row mb-4">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <h5>Username</h5>
                         <p>{{ user.username }}</p>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
+                        <h5>Hidden Username</h5>
+                        <p>{{ user.hidden_username }}</p>
+                    </div>
+                    <div class="col-md-3">
                         <h5>Email</h5>
                         <p>{{ user.email }}</p>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <h5>Member Since</h5>
                         <p>{{ user.joined_date|date:"F j, Y" }}</p>
                     </div>
                 </div>
+                <div class="row mb-4">
+                    <div class="col-md-12">
+                        <!-- Enables the user to hide username.-->
+                        <!--On one hand, this avoids humiliating low performing students. On the other hand may be needed for data protection -->
+                        <form method="post" class="form-inline justify-content-center" id="hiddenUsernameForm">
+                            {% csrf_token %}
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="useHiddenUsername" name="use_hidden_username" 
+                                       {% if user.use_hidden_username %}checked{% endif %}
+                                       onchange="this.form.submit()">
+                                <label class="custom-control-label" for="useHiddenUsername">Use hidden username in scoreboards</label>
+                            </div>
+                        </form>
+                    </div>
+                </div>
 
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="card bg-light">
                             <div class="card-body">
                                 <h5 class="card-title">Total Score</h5>
@@ -33,19 +52,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="card bg-light">
                             <div class="card-body">
                                 <h5 class="card-title">Assignments Completed</h5>
                                 <p class="card-text h3">{{ user.assignments_completed }}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card bg-light">
-                            <div class="card-body">
-                                <h5 class="card-title">Avg. Submission Time</h5>
-                                <p class="card-text h3">{{ user.avg_submission_time|floatformat:1 }} hours</p>
                             </div>
                         </div>
                     </div>
