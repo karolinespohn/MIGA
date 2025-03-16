@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from . import views
+from . import models
 
 urlpatterns = [
     path('', views.redirect_to_dashboard, name='home'),
@@ -31,4 +32,6 @@ urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
     path('profile/', views.profile, name='profile'),
     path('scoreboard/', views.scoreboard, name='scoreboard'),
+
+    path('api/benchmark-results/', views.submit_benchmark, name='submit_benchmark'),
 ]

@@ -22,7 +22,13 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["vital-whippet-ideally.ngrok-free.app", "localhost", "127.0.0.1"]
+
+# Add your ngrok URL to trusted origins
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.ngrok-free.app",
+    "https://vital-whippet-ideally.ngrok-free.app"
+]
 
 # Application definition
 
@@ -35,7 +41,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'widget_tweaks',
     'miga',
+    'rest_framework',
+    'rest_framework.authtoken'
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+}
 
 # Authentication settings
 LOGIN_REDIRECT_URL = 'dashboard'
@@ -43,8 +57,9 @@ LOGOUT_REDIRECT_URL = 'login'
 LOGIN_URL = 'login'
 
 # Static files configuration
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [
-    BASE_DIR / 'static',
+    BASE_DIR / 'miga' / 'static',
 ]
 
 MIDDLEWARE = [
