@@ -2,6 +2,7 @@
 Welcome to MIGA.
 This app includes a scoreboard and badges and its aim is making imlab more fun and engaging.
 I implemented a scoreboard, dashboard with awards and a performance graph. 
+If you have any questions at any point, please contact me :))
 # How to run
 - create venv
 - run `pip install -r requirements.txt`
