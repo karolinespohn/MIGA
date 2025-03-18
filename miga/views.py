@@ -213,6 +213,8 @@ def scoreboard(request):
 
     for user in sorted_users:
         user.user_awards = UserAward.objects.filter(user=user).select_related('award')
+        # Add CPU time to user object for easy access in template
+        user.cpu_time = user_times.get(user.id, 0)
 
     current_user_rank = calculate_user_rank(request.user, sorted_users) or 0
 

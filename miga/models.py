@@ -90,6 +90,7 @@ class Performance(models.Model):
     score = models.IntegerField()
     submission_time = models.DateTimeField(default=timezone.now)
     completion_time = models.FloatField(help_text="Time taken to complete in hours")
+    cpu_time = models.FloatField(null=True, help_text="CPU time in nanoseconds")
 
     class Meta:
         ordering = ['-submission_time']
@@ -195,7 +196,7 @@ class BenchmarkMetric(models.Model):
         performance, created = Performance.objects.get_or_create(
             user=self.benchmark_result.user,
             assignment=self.assignment,
-            defaults={'score': 0, 'completion_time': 0}
+            defaults={'score': 0, 'completion_time': 0, 'cpu_time': self.cpu_time}
         )
 
         metric = BenchmarkMetric.objects.filter(
@@ -206,4 +207,5 @@ class BenchmarkMetric(models.Model):
         if metric:
             time = metric.first().cpu_time
             performance.score = time
+            performance.cpu_time = time
             performance.save()

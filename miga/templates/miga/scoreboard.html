@@ -49,6 +49,7 @@
                             <tr>
                                 <th>Rank</th>
                                 <th>User</th>
+                                <th>CPU Time (ns)</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -66,10 +67,11 @@
                                                  style="height: 30px; width: auto; background-color: white; padding: 2px; border-radius: 2px;">
                                         {% endfor %}
                                     </td>
+                                    <td>{{ user.cpu_time|floatformat:2 }}</td>
                                 </tr>
                             {% empty %}
                                 <tr>
-                                    <td colspan="2" class="text-center">No rankings available for this period.</td>
+                                    <td colspan="3" class="text-center">No rankings available for this period.</td>
                                 </tr>
                             {% endfor %}
                             </tbody>
